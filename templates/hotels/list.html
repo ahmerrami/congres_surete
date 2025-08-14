@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Hôtels partenaires{% endblock %}
+{% block content %}
+<h2>Hôtels partenaires</h2>
+<div class="row g-3">
+  {% for h in hotels %}
+  <div class="col-md-4">
+    <div class="card h-100">
+      {% if h.image %}<img src="{{ h.image.url }}" class="card-img-top" alt="{{ h.name }}">{% endif %}
+      <div class="card-body">
+        <h5 class="card-title">{{ h.name }}</h5>
+        <p class="card-text">{{ h.location }}</p>
+        <p class="small mb-1">Single: {{ h.single_price }} MAD</p>
+        <p class="small mb-1">Double: {{ h.double_price }} MAD</p>
+        <p class="small">Suite: {{ h.suite_price }} MAD</p>
+        <a href="{% url 'hotels:detail' h.pk %}" class="btn btn-outline-primary btn-sm">Détails</a>
+        <a href="{% url 'reservations:start' h.pk %}" class="btn btn-primary btn-sm">Réserver</a>
+      </div>
+    </div>
+  </div>
+  {% empty %}
+  <p>Aucun hôtel disponible.</p>
+  {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,53 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pdb
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual environment
+venv/
+env/
+ENV/
+.venv/
+.env/
+*.env
+
+# Django
+*.log
+*.pot
+*.pyc
+db.sqlite3
+media/
+staticfiles/
+
+# Django local settings
+/local_settings.py
+/settings_local.py
+
+# VS Code / IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# pytest / coverage
+.coverage
+htmlcov/
+.pytest_cache/
+
+# Migrations cache (générés automatiquement, sauf si tu veux versionner)
+*/migrations/__pycache__/
+*/migrations/*.pyc
+# ⚠ Si tu veux ignorer *toutes* les migrations locales (pas conseillé pour prod) :
+*/migrations/*.py

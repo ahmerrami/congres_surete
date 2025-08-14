@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Mon profil{% endblock %}
+{% block content %}
+<div class="bg-white p-4 rounded shadow-sm">
+  <h2>Mon profil</h2>
+  <p><strong>Nom:</strong> {{ request.user.get_full_name }}</p>
+  <p><strong>Email:</strong> {{ request.user.email }}</p>
+  <p><a class="btn btn-outline-primary" href="{% url 'accounts:my_reservations' %}">Mes réservations</a></p>
+</div>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}{{ hotel.name }}{% endblock %}
+{% block content %}
+<div class="bg-white p-4 rounded shadow-sm">
+  <h2>{{ hotel.name }}</h2>
+  <p>{{ hotel.location }}</p>
+  <p>{{ hotel.description }}</p>
+  <p>Tarifs — Single: {{ hotel.single_price }} MAD • Double: {{ hotel.double_price }} MAD • Suite: {{ hotel.suite_price }} MAD</p>
+  <a class="btn btn-primary" href="{% url 'reservations:start' hotel.pk %}">Réserver</a>
+</div>
+{% endblock %}

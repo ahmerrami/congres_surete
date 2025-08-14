@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block title %}Réserver — {{ hotel.name }}{% endblock %}
+{% block content %}
+<div class="bg-white p-4 rounded shadow-sm">
+  <h2>Réserver à {{ hotel.name }}</h2>
+  <p>Tarifs: Single {{ hotel.single_price }} MAD — Double {{ hotel.double_price }} MAD — Suite {{ hotel.suite_price }} MAD</p>
+  <form method="post">{% csrf_token %}
+    {{ form|crispy }}
+    <button class="btn btn-primary">Continuer vers le paiement</button>
+  </form>
+</div>
+{% endblock %}

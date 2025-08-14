@@ -1,0 +1,4 @@
+[
+  {"model":"hotels.hotel","pk":1,"fields":{"name":"Hotel Rabat Centre","location":"Rabat Agdal","description":"À 10 min du lieu du congrès","single_price":"900.00","double_price":"1200.00","suite_price":"1800.00","quota_single":50,"quota_double":50,"quota_suite":20,"active":true}},
+  {"model":"hotels.hotel","pk":2,"fields":{"name":"Hotel Jardin Hassan","location":"Rabat Hassan","description":"Petit déjeuner inclus","single_price":"800.00","double_price":"1100.00","suite_price":"1600.00","quota_single":30,"quota_double":40,"quota_suite":10,"active":true}}
+]

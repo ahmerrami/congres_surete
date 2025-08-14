@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<div class="row g-3">
+  <div class="col-md-2"><div class="card"><div class="card-body"><div class="fw-bold">Participants</div><div class="display-6">{{ stats.participants }}</div></div></div></div>
+  <div class="col-md-2"><div class="card"><div class="card-body"><div class="fw-bold">Réservations</div><div class="display-6">{{ stats.reservations }}</div></div></div></div>
+  <div class="col-md-2"><div class="card"><div class="card-body"><div class="fw-bold">Payées</div><div class="display-6">{{ stats.paid }}</div></div></div></div>
+  <div class="col-md-2"><div class="card"><div class="card-body"><div class="fw-bold">En attente</div><div class="display-6">{{ stats.pending }}</div></div></div></div>
+  <div class="col-md-2"><div class="card"><div class="card-body"><div class="fw-bold">Annulées</div><div class="display-6">{{ stats.cancelled }}</div></div></div></div>
+  <div class="col-md-2"><div class="card"><div class="card-body"><div class="fw-bold">Remboursements</div><div class="display-6">{{ stats.refunds }}</div></div></div></div>
+</div>
+<div class="bg-white p-3 mt-3 rounded shadow-sm">
+  <div class="d-flex justify-content-between align-items-center">
+    <h5 class="mb-0">Dernières réservations</h5>
+    <div>
+      <a class="btn btn-sm btn-outline-secondary" href="{% url 'dashboard:export_participants_csv' %}">Exporter Participants (CSV)</a>
+      <a class="btn btn-sm btn-outline-secondary" href="{% url 'dashboard:export_reservations_excel' %}">Exporter Réservations (Excel)</a>
+    </div>
+  </div>
+  <table class="table table-sm mt-3">
+    <thead><tr><th>#</th><th>Participant</th><th>Hôtel</th><th>Type</th><th>Total</th><th>Statut</th></tr></thead>
+    <tbody>
+      {% for r in latest %}
+      <tr>
+        <td>{{ r.id }}</td>
+        <td>{{ r.participant }}</td>
+        <td>{{ r.hotel.name }}</td>
+        <td>{{ r.get_room_type_display }}</td>
+        <td>{{ r.total_amount }} MAD</td>
+        <td>{{ r.get_status_display }}</td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="6" class="text-center">Aucune donnée</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

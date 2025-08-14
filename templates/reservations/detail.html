@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Réservation {{ res.id }}{% endblock %}
+{% block content %}
+<div class="bg-white p-4 rounded shadow-sm">
+  <h2>Réservation #{{ res.id }}</h2>
+  <p>Participant: {{ res.participant }}</p>
+  <p>Hôtel: {{ res.hotel.name }}</p>
+  <p>Type: {{ res.get_room_type_display }} | Nuits: {{ res.nights }}</p>
+  <p>Total: {{ res.total_amount }} MAD — Statut: {{ res.get_status_display }}</p>
+  {% if refund %}<p>Remboursement: {{ refund.percent }}% ({{ refund.amount }} MAD) — Statut: {{ refund.status }}</p>{% endif %}
+  {% if res.status != "CANCELLED" %}
+    <a class="btn btn-outline-danger" href="{% url 'reservations:cancel' res.id %}">Annuler la réservation</a>
+  {% endif %}
+</div>
+{% endblock %}

@@ -6,8 +6,7 @@ from core.views import HomeView, ProgramView, language_switch, debug_language
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", HomeView.as_view(), name="home"),
-    path("program/", ProgramView.as_view(), name="program"),
+    path("", include("core.urls", namespace="core")),
     path("i18n/<str:lang>/", language_switch, name="language_switch"),
     # ==================
     path('debug-language/', debug_language, name='debug_language'),

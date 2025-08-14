@@ -3,9 +3,9 @@ from reservations.models import Reservation
 
 class Payment(models.Model):
     class Status(models.TextChoices):
-        INITIATED = "INITIATED"
-        SUCCESS = "SUCCESS"
-        FAILED = "FAILED"
+        INITIATED = "Initiated"
+        SUCCESS = "Success"
+        FAILED = "Failed"
 
     reservation = models.OneToOneField(Reservation, on_delete=models.CASCADE, related_name="payment")
     amount = models.DecimalField(max_digits=10, decimal_places=2)
@@ -18,9 +18,9 @@ class Payment(models.Model):
 
 class Refund(models.Model):
     class Status(models.TextChoices):
-        PENDING = "PENDING"
-        SUCCESS = "SUCCESS"
-        FAILED = "FAILED"
+        PENDING = "Pending"
+        SUCCESS = "Success"
+        FAILED = "Failed"
     payment = models.ForeignKey(Payment, on_delete=models.CASCADE, related_name="refunds")
     percent = models.PositiveIntegerField(default=0)
     amount = models.DecimalField(max_digits=10, decimal_places=2)

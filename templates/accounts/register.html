@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
-{% block title %}Inscription{% endblock %}
+{% block title %}Registration{% endblock %}
 {% block content %}
 <div class="bg-white p-4 rounded shadow-sm">
-  <h2>Créer un compte</h2>
+  <h2>Create an account</h2>
   <form method="post">{% csrf_token %}
     {{ form|crispy }}
-    <button class="btn btn-primary">S'inscrire</button>
+    <button class="btn btn-primary">Register</button>
   </form>
 </div>
 {% endblock %}

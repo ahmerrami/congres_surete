@@ -5,7 +5,7 @@
   <h2>{{ hotel.name }}</h2>
   <p>{{ hotel.location }}</p>
   <p>{{ hotel.description }}</p>
-  <p>Tarifs — Single: {{ hotel.single_price }} MAD • Double: {{ hotel.double_price }} MAD • Suite: {{ hotel.suite_price }} MAD</p>
-  <a class="btn btn-primary" href="{% url 'reservations:start' hotel.pk %}">Réserver</a>
+  <p>Rates — Single: {{ hotel.single_price }} MAD • Double: {{ hotel.double_price }} MAD • Suite: {{ hotel.suite_price }} MAD</p>
+  <a class="btn btn-primary" href="{% url 'reservations:start' hotel.pk %}">Book Now</a>
 </div>
 {% endblock %}

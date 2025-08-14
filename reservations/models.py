@@ -11,9 +11,9 @@ class Reservation(models.Model):
         SUITE = "SUITE", _("Suite")
 
     class Status(models.TextChoices):
-        PENDING = "PENDING", _("En attente")
-        PAID = "PAID", _("Payée")
-        CANCELLED = "CANCELLED", _("Annulée")
+        PENDING = "PENDING", _("Pending")
+        PAID = "PAID", _("Paid")
+        CANCELLED = "CANCELLED", _("Cancelled")
 
     participant = models.ForeignKey(Participant, on_delete=models.CASCADE, related_name="reservations")
     hotel = models.ForeignKey(Hotel, on_delete=models.PROTECT, related_name="reservations")

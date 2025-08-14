@@ -1,13 +1,13 @@
 {% extends "base.html" %}
-{% block title %}Annulation — Réservation {{ res.id }}{% endblock %}
+{% block title %}Cancellation — Reservation {{ res.id }}{% endblock %}
 {% block content %}
 <div class="bg-white p-4 rounded shadow-sm">
-  <h2>Annuler la réservation #{{ res.id }}</h2>
-  <p>Montant total: {{ res.total_amount }} MAD</p>
-  <p>Remboursement estimé selon la politique actuelle: <strong>{{ percent }}%</strong> soit <strong>{{ refund_amount }} MAD</strong>.</p>
+  <h2>Cancel Reservation #{{ res.id }}</h2>
+  <p>Total amount: {{ res.total_amount }} MAD</p>
+  <p>Estimated refund according to current policy: <strong>{{ percent }}%</strong> (<strong>{{ refund_amount }} MAD</strong>).</p>
   <form method="post">{% csrf_token %}
-    <button class="btn btn-danger">Confirmer l'annulation</button>
-    <a class="btn btn-secondary" href="{% url 'reservations:detail' res.id %}">Retour</a>
+    <button class="btn btn-danger">Confirm Cancellation</button>
+    <a class="btn btn-secondary" href="{% url 'reservations:detail' res.id %}">Back</a>
   </form>
 </div>
 {% endblock %}

@@ -1,11 +1,11 @@
 <!doctype html>
 <html><body onload="document.forms[0].submit()">
-  <p>Redirection vers CMI…</p>
+  <p>Redirecting to CMI...</p>
   <form method="post" action="{{ cmi_url }}">
     {% csrf_token %}
     {% for k,v in payload.items %}
       <input type="hidden" name="{{ k }}" value="{{ v }}">
     {% endfor %}
-    <noscript><button type="submit">Payer maintenant</button></noscript>
+    <noscript><button type="submit">Pay Now</button></noscript>
   </form>
 </body></html>

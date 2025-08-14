@@ -25,7 +25,8 @@ def start(request, hotel_id):
     try:
         participant = Participant.objects.get(email=request.user.email)
     except Participant.DoesNotExist:
-        participant = None
+        messages.error(request, "Votre profil participant est introuvable. Veuillez le compléter.")
+        return redirect('accounts:profile')
 
     # Vérifier si le compte utilisateur est confirmé
     if not getattr(request.user, 'is_confirmed', False):
@@ -50,6 +51,14 @@ def start(request, hotel_id):
                     res.nights = res.compute_nights()
                     res.total_amount = res.compute_total()
                     res.save()
+
+                    # Décrémenter le stock en s'assurant qu'il ne devient pas négatif
+                    if hotel.has_stock(room_type):
+                        hotel.decrement_stock(room_type)
+                        hotel.save()
+                    else:
+                        messages.error(request, "Stock épuisé pendant la transaction. Veuillez réessayer.")
+                        return redirect("reservations:start", hotel_id=hotel.id)
 
                 messages.success(request, "Réservation créée. Veuillez procéder au paiement.")
                 return redirect("payments:start", res_id=res.id)
@@ -80,8 +89,19 @@ def cancel(request, res_id):
     """
     res = get_object_or_404(Reservation, pk=res_id)
 
-    # Calcul du pourcentage de remboursement
-    days_before = (settings.EVENT_START_DATE - datetime.date.today()).days
+    # Conversion de la date depuis settings
+    event_start = getattr(settings, "EVENT_START_DATE", None)
+    if isinstance(event_start, datetime.date):
+        event_start_date = event_start
+    elif isinstance(event_start, str):
+        try:
+            event_start_date = datetime.datetime.strptime(event_start, "%Y-%m-%d").date()
+        except ValueError:
+            event_start_date = datetime.date.today()
+    else:
+        event_start_date = datetime.date.today()
+
+    days_before = (event_start_date - datetime.date.today()).days
     percent = 0
     rules = sorted(settings.REFUND_RULES, key=lambda r: r["min_days"], reverse=True)
     for r in rules:
@@ -96,6 +116,11 @@ def cancel(request, res_id):
             res.status = Reservation.Status.CANCELLED
             res.save(update_fields=["status"])
 
+            # Ré-incrémenter le stock de la chambre annulée
+            if res.hotel and res.room_type:
+                res.hotel.increment_stock(res.room_type)
+                res.hotel.save()
+
             if (
                 hasattr(res, "payment") and 
                 res.payment.status == Payment.Status.SUCCESS and 
@@ -106,10 +131,10 @@ def cancel(request, res_id):
                     payment=res.payment,
                     percent=percent,
                     amount=refund_amount,
-                    status=Refund.Status.SUCCESS if settings.CMI["MODE"] == "simulate" else Refund.Status.PENDING
+                    status=Refund.Status.SUCCESS if getattr(settings, "CMI_MODE", "simulate") == "simulate" else Refund.Status.PENDING
                 )
 
-                if settings.CMI["MODE"] == "simulate":
+                if getattr(settings, "CMI_MODE", "simulate") == "simulate":
                     messages.success(
                         request,
                         f"Annulation confirmée. Remboursement simulé: {percent}% ({refund_amount} MAD)."

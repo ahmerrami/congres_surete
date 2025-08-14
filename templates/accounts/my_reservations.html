@@ -1,11 +1,11 @@
 {% extends "base.html" %}
-{% block title %}Mes réservations{% endblock %}
+{% block title %}My Reservations{% endblock %}
 {% block content %}
 <div class="bg-white p-4 rounded shadow-sm">
-  <h2>Mes réservations</h2>
+  <h2>My Reservations</h2>
   {% if reservations %}
     <table class="table">
-      <thead><tr><th>#</th><th>Hôtel</th><th>Type</th><th>Nuits</th><th>Total</th><th>Statut</th><th></th></tr></thead>
+      <thead><tr><th>#</th><th>Hotel</th><th>Type</th><th>Nights</th><th>Total</th><th>Status</th><th></th></tr></thead>
       <tbody>
       {% for r in reservations %}
         <tr>
@@ -15,13 +15,13 @@
           <td>{{ r.nights }}</td>
           <td>{{ r.total_amount }}</td>
           <td>{{ r.get_status_display }}</td>
-          <td><a class="btn btn-sm btn-outline-secondary" href="{% url 'reservations:detail' r.id %}">Détails</a></td>
+          <td><a class="btn btn-sm btn-outline-secondary" href="{% url 'reservations:detail' r.id %}">Details</a></td>
         </tr>
       {% endfor %}
       </tbody>
     </table>
   {% else %}
-    <p>Aucune réservation trouvée.</p>
+    <p>No reservations found.</p>
   {% endif %}
 </div>
 {% endblock %}

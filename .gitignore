@@ -51,3 +51,4 @@ htmlcov/
 */migrations/*.pyc
 # ⚠ Si tu veux ignorer *toutes* les migrations locales (pas conseillé pour prod) :
 */migrations/*.py
+myenv/

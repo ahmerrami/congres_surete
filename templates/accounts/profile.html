@@ -5,6 +5,6 @@
   <h2>My Profile</h2>
   <p><strong>Name:</strong> {{ request.user.get_full_name }}</p>
   <p><strong>Email:</strong> {{ request.user.email }}</p>
-  <p><a class="btn btn-outline-primary" href="{% url 'accounts:my_reservations' %}">My Reservations</a></p>
+  <p><a class="btn btn-outline-primary" href="{% url 'accounts_custom:my_reservations' %}">My Reservations</a></p>
 </div>
 {% endblock %}

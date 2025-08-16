@@ -35,14 +35,14 @@ def register_view(request):
             )
             token = _activation_token(user.email)
             link = _activation_link(token)
-            subject = 'Activation de votre compte — Congrès Sûreté'
-            body = f'Bonjour {user.first_name},\n\nMerci pour votre inscription. Activez votre compte : {link}\n\nCordialement.'
+            subject = 'Account Activation — Security Congress'
+            body = f'Hello {user.first_name},\n\nThank you for registering. Activate your account: {link}\n\nBest regards.'
             mail.send_mail(subject, body, settings.DEFAULT_FROM_EMAIL, [user.email], fail_silently=False)
-            messages.success(request, 'Compte créé. Un email d’activation vous a été envoyé.')
-            return redirect('home')
+            messages.success(request, 'Account created. An activation email has been sent to you.')
+            return redirect('core:home')
     else:
         form = UserRegisterForm()
-    return render(request, 'accounts/register.html', {'form': form})
+    return render(request, 'account/register.html', {'form': form})
 
 def activate_view(request, token: str):
     try:
@@ -58,12 +58,12 @@ def activate_view(request, token: str):
                 p.save(update_fields=['is_confirmed'])
             except Participant.DoesNotExist:
                 pass
-            messages.success(request, 'Votre compte est activé. Vous pouvez vous connecter et réserver.')
+            messages.success(request, 'Your account is activated. You can now log in and make reservations.')
         else:
-            messages.info(request, 'Compte déjà activé.')
+            messages.info(request, 'Account already activated.')
     except Exception:
-        messages.error(request, 'Lien d’activation invalide ou expiré.')
-    return redirect('accounts:login')
+        messages.error(request, 'Invalid or expired activation link.')
+    return redirect('account_login')
 
 def profile_view(request):
     return render(request, 'accounts/profile.html')
